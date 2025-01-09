@@ -29,6 +29,7 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            'profile_picture_url' => "https://picsum.photos/seed/picsum/200/300",
             'gender' => fake()->randomElement(['Male', 'Female']),
             'instagram' => 'https://www.instagram.com/username/#',
             'mobile_number' => fake()->numerify('08##########'),
