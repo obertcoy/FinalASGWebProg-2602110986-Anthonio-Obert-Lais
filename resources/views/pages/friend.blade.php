@@ -40,7 +40,6 @@
             </div>
         </div>
 
-        <!-- All Friends Section -->
         <div class="card">
             <div class="card-header">
                 <h3>All Friends</h3>
@@ -53,9 +52,9 @@
                         @foreach ($friends as $friend)
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 {{ $friend->user->name }}
-                                <span class="badge bg-success">
-                                    Friend
-                                </span>
+                                <a href="{{ route('chat-room.friend', ['friend'=>$friend->is_friend]) }}" class="btn btn-primary">
+                                    Chat
+                                </a>
                             </li>
                         @endforeach
                     </ul>

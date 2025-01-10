@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Friend;
+use App\Models\User;
+use App\Notifications\FriendRequestNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use phpDocumentor\Reflection\Types\Boolean;
@@ -25,6 +27,15 @@ class FriendController extends Controller
         $friendsSentAccepted = $user->friends()->where('status', 'Accepted')->get();
         $friendsReceivedAccepted = $user->friendOf()->where('status', 'Accepted')->get();
         $friends = $friendsSentAccepted->merge($friendsReceivedAccepted);
+
+        $friends->each(function ($friend) use ($user) {
+            if ($friend->user_id == $user->id) {
+                $friend->is_friend = $friend->friend_id; // Friend is the other user
+            } else {
+                $friend->is_friend = $friend->user_id; // Friend is the current user
+            }
+        });
+
         $friends = $friends->sortByDesc('created_at');
 
         return view('pages/friend', compact('friendRequests', 'friends'));
@@ -49,7 +60,14 @@ class FriendController extends Controller
 
         $user = Auth::user();
 
-        $user->friends()->attach($request->id);
+        $receiver = User::findOrFail($request->id);
+
+        Friend::create([
+            'user_id' => $user->id,
+            'friend_id' => $receiver->id,
+        ]);
+
+        $receiver->notify(new FriendRequestNotification($user, $receiver));
 
         return redirect()->back()->with('success', 'Friend request sent');
     }
@@ -79,7 +97,7 @@ class FriendController extends Controller
             return redirect()->route('auth.sign-in');
         }
 
-        $user = Auth::user();   
+        $user = Auth::user();
 
         if ($friend->status === 'Requested') {
 
@@ -90,10 +108,10 @@ class FriendController extends Controller
             } else {
                 $friend->delete();
             }
-    
+
             return redirect()->back()->with('success', $request->accept ? 'Friend request accepted.' : 'Friend request rejected.');
         }
-    
+
         return redirect()->back()->with('error', 'This request is no longer valid.');
     }
 

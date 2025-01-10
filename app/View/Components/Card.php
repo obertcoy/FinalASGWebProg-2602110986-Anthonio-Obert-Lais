@@ -10,34 +10,38 @@ use Illuminate\View\Component;
 
 class Card extends Component
 {
-    public $friendId;
+    public $userId;
     public $imageUrl;
     public $name;
     public $age;
     public $status;
+    public $hobbies;
+    public $gender;
 
-    public function __construct($friendId, $imageUrl, $name, $age)
+    public function __construct($user)
     {
-        $this->friendId = $friendId;
-        $this->imageUrl = $imageUrl;
-        $this->name = $name;
-        $this->age = $age;
+        $this->userId = $user->id;
+        $this->imageUrl = $user->profile_picture_url;
+        $this->name = $user->name;
+        $this->age = $user->age;
         $this->status = null;
+        $this->hobbies = $user->hobbies;
+        $this->gender = $user->gender;
 
         if(Auth::check()){
-            $user = Auth::user();
+            $currentUser = Auth::user();
 
-            $friendship = Friend::where(function ($query) use ($user, $friendId) {
-                $query->where('user_id', $user->id)
-                      ->where('friend_id', $friendId);
-            })->orWhere(function ($query) use ($user, $friendId) {
-                $query->where('user_id', $friendId)
-                      ->where('friend_id', $user->id);
+            $friendship = Friend::where(function ($query) use ($currentUser) {
+                $query->where('user_id', $currentUser->id)
+                      ->where('friend_id', $this->userId);
+            })->orWhere(function ($query) use ($currentUser) {
+                $query->where('user_id', $this->userId)
+                      ->where('friend_id', $currentUser->id);
             })->first();
-        
+
             if ($friendship) {
                 $this->status = $friendship->status;
-            } 
+            }
         }
     }
 

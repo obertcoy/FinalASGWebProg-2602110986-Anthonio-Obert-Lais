@@ -13,7 +13,7 @@
         <h1 class="mb-4">Register</h1>
         <form method="POST" action="{{ route('user.store') }}">
             @csrf
-            <div>
+            <div class="mb-3">
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name" class="form-control" value="{{ old('name') }}"
                     required>
@@ -31,7 +31,7 @@
                 @enderror
             </div>
 
-            <div>
+            <div class="mb-3">
                 <label for="password_confirm">Confirm Password</label>
                 <input type="password" id="password_confirm" name="password_confirm" class="form-control"
                     value="{{ old('password_confirm') }}" required>
@@ -41,7 +41,7 @@
             </div>
 
 
-            <div>
+            <div class="mb-3">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" class="form-control" value="{{ old('email') }}"
                     required>
@@ -95,8 +95,6 @@
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
-
-            <h2 class="my-4 fw-normal">Registration price: <b>{{$registrationPrice}}</b></h2>
 
             <button type="submit" class="btn btn-primary">Register</button>
         </form>

@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('instagram');
             $table->string('mobile_number');
             $table->integer('age');
+            $table->integer('wallet')->default(0);
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
