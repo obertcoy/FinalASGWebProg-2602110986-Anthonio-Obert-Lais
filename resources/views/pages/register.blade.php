@@ -103,6 +103,9 @@
             <p class="text-danger">{{ session('error') }}</p>
         @endif
     </div>
+    <div class="mt-3 text-center">
+        <p>Already have an account? <a href="{{ route('auth.index') }}">Sign in</a></p>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

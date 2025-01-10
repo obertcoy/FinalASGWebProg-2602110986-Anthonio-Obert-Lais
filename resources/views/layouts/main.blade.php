@@ -21,6 +21,9 @@
         @endif
     </head>
     <body class="font-sans antialiased dark:bg-black dark:text-white/50 position-relative">
+
+        <x-navbar/>
+
         @yield('content')
 
         <div class="position-fixed" style="bottom: 8px; right: 8px;">

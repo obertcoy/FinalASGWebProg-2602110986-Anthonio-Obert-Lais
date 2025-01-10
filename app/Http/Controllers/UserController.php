@@ -13,7 +13,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $featuredUsers = User::take(3)->get();
+
+        // dd($featuredUsers);
+
+        return view('pages/welcome', compact('featuredUsers'));
     }
 
     /**
@@ -47,11 +51,11 @@ class UserController extends Controller
             return trim($hobby);
         });
 
-        if(!str_contains($validated['instagram'], 'www.instagram.com')){
+        if (!str_contains($validated['instagram'], 'www.instagram.com')) {
             return redirect()->back()->with('error', 'Instagram link not valid')->withInput();
         }
 
-        if(count($hobbies) < 3){
+        if (count($hobbies) < 3) {
             return redirect()->back()->withErrors('Hobbies minimal of 3')->withInput();
         }
 
