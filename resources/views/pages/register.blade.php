@@ -14,7 +14,7 @@
         <form method="POST" action="{{ route('user.store') }}">
             @csrf
             <div>
-                <label for="name">Name:</label>
+                <label for="name">Name</label>
                 <input type="text" id="name" name="name" class="form-control" value="{{ old('name') }}"
                     required>
                 @error('name')
@@ -23,7 +23,7 @@
             </div>
 
             <div>
-                <label for="password">Password:</label>
+                <label for="password">Password</label>
                 <input type="password" id="password" name="password" class="form-control" value="{{ old('password') }}"
                     required>
                 @error('password')
@@ -32,7 +32,7 @@
             </div>
 
             <div>
-                <label for="password_confirm">Confirm Password:</label>
+                <label for="password_confirm">Confirm Password</label>
                 <input type="password" id="password_confirm" name="password_confirm" class="form-control"
                     value="{{ old('password_confirm') }}" required>
                 @error('password_confirm')
@@ -42,7 +42,7 @@
 
 
             <div>
-                <label for="email">Email:</label>
+                <label for="email">Email</label>
                 <input type="email" id="email" name="email" class="form-control" value="{{ old('email') }}"
                     required>
                 @error('email')
@@ -95,6 +95,8 @@
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
+
+            <h2 class="my-4 fw-normal">Registration price: <b>{{$registrationPrice}}</b></h2>
 
             <button type="submit" class="btn btn-primary">Register</button>
         </form>

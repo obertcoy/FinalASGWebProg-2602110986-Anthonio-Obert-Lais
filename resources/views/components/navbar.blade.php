@@ -9,12 +9,20 @@
             </div>
         @endguest
         @auth
-        <div class="mt-4">
-            <form action="{{ route('auth.sign-out') }}" method="POST">
-                @csrf
-                <button class="btn btn-outline-light">Sign Out</button>
-            </form>
-        </div>
+            <div class="d-flex justify-content-between w-100 mt-4">
+                <div class="">
+                    <form action="{{ route('auth.sign-out') }}" method="POST">
+                        @csrf
+                        <button class="btn btn-outline-light">Sign Out</button>
+                    </form>
+                </div>
+
+                <div class="text-end ms-auto">
+                    <a href="{{ route('friend.index') }}" class="btn btn-light">Friends</a>
+                </div>
+            </div>
+
+
         @endauth
     </div>
 </header>

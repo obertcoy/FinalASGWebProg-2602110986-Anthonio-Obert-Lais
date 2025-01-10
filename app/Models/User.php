@@ -54,4 +54,14 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Hobby::class);
     }
+
+    public function friends()
+    {
+        return $this->hasMany(Friend::class, 'user_id');
+    }
+
+    public function friendOf()
+    {
+        return $this->hasMany(Friend::class, 'friend_id');
+    }
 }
